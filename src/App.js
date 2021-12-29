@@ -31,6 +31,7 @@ function App() {
     const updatedUsers = Users.filter((user) => {
       return user.checked == false
     })
+    if (currentPage == Math.ceil(pagesCount)) setCurrentPage(currentPage - 1)
     setUsers(updatedUsers)
     setPagesCount(updatedUsers.length / 10)
     if (selectAllChecked == true) setselectAllChecked(false)
