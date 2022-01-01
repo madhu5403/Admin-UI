@@ -1,6 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete"
 import EditIcon from "@mui/icons-material/Edit"
 import SaveIcon from "@mui/icons-material/Save"
+import { useRef } from "react"
 function User({
   id,
   name,
@@ -11,50 +12,64 @@ function User({
   user,
   Users,
   handleSingleDelete,
+  setSearchUsers,
 }) {
+  const inputNameRef = useRef()
+  const inputEmailRef = useRef()
+  const inputRoleRef = useRef()
+
   function handleCheckBoxClick(e) {
     if (e.target.checked) {
       const updatedUsers = Users.map((user) =>
         user.id == id ? { ...user, checked: true } : user
       )
       setUsers(updatedUsers)
+      setSearchUsers(updatedUsers)
     } else {
       const updatedUsers = Users.map((user) =>
         user.id == id ? { ...user, checked: false } : user
       )
       setUsers(updatedUsers)
+      setSearchUsers(updatedUsers)
     }
   }
-  function handleNameChange(e, id) {
-    const updatedUsers = Users.map((user) =>
-      user.id == id ? { ...user, name: e.target.value } : user
-    )
-    setUsers(updatedUsers)
-  }
-  function handleEmailChange(e, id) {
-    const updatedUsers = Users.map((user) =>
-      user.id == id ? { ...user, email: e.target.value } : user
-    )
-    setUsers(updatedUsers)
-  }
+
   function handleEdit(id) {
     const updatedUsers = Users.map((user) =>
       user.id == id ? { ...user, showEdit: true } : user
     )
     setUsers(updatedUsers)
+    setSearchUsers(updatedUsers)
   }
   function handleSave(id) {
-    const updatedUsers = Users.map((user) =>
-      user.id == id ? { ...user, showEdit: false } : user
-    )
-    setUsers(updatedUsers)
+    if (inputNameRef.current.value != "" || inputEmailRef.current.value != "") {
+      const updatedUsers = Users.map((user) =>
+        user.id == id
+          ? {
+              ...user,
+              name: inputNameRef.current.value,
+              email: inputEmailRef.current.value,
+              role: inputRoleRef.current.value,
+              showEdit: false,
+            }
+          : user
+      )
+      setUsers(updatedUsers)
+      setSearchUsers(updatedUsers)
+    } else {
+      const updatedUsers = Users.map((user) =>
+        user.id == id
+          ? {
+              ...user,
+              showEdit: false,
+            }
+          : user
+      )
+      setUsers(updatedUsers)
+      setSearchUsers(updatedUsers)
+    }
   }
-  function handleRoleChnage(e, id) {
-    const updatedUsers = Users.map((user) =>
-      user.id == id ? { ...user, role: e.target.value } : user
-    )
-    setUsers(updatedUsers)
-  }
+
   return (
     <div
       className={
@@ -70,23 +85,23 @@ function User({
       <div>
         <div className="margin-bottom">{name}</div>
         <input
+          ref={inputNameRef}
           className={user.showEdit == false ? "hide" : ""}
-          onChange={(e) => handleNameChange(e, id)}
           type="text"
         />
       </div>
       <div>
         <div className="margin-bottom">{email}</div>
         <input
+          ref={inputEmailRef}
           className={user.showEdit == false ? "hide" : ""}
-          onChange={(e) => handleEmailChange(e, id)}
           type="email"
         />
       </div>
       <div>
         <div className="margin-bottom">{role}</div>
         <select
-          onChange={(e) => handleRoleChnage(e, id)}
+          ref={inputRoleRef}
           className={user.showEdit == false ? "hide" : ""}
         >
           <option value="member">Member</option>

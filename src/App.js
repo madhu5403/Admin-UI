@@ -73,6 +73,7 @@ function App() {
             user={user}
             Users={Users}
             handleSingleDelete={handleSingleDelete}
+            setSearchUsers={setSearchUsers}
           />
         )
       })}
