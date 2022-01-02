@@ -35,12 +35,12 @@ function UserTemplate({
           checked={selectAllChecked}
           type="checkbox"
         />
-        <div>Name</div>
+        <div data-testid="name">Name</div>
         <div>Email</div>
         <div>Role</div>
         <div>Actions</div>
       </div>
-      {Users.length == 0 ? <div>No users</div> : null}
+      {Users?.length == 0 ? <div>No users</div> : null}
     </>
   )
 }

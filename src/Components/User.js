@@ -7,7 +7,6 @@ function User({
   name,
   email,
   role,
-  selectAllChecked,
   setUsers,
   user,
   Users,
@@ -17,7 +16,6 @@ function User({
   const inputNameRef = useRef()
   const inputEmailRef = useRef()
   const inputRoleRef = useRef()
-
   function handleCheckBoxClick(e) {
     if (e.target.checked) {
       const updatedUsers = Users.map((user) =>
@@ -83,23 +81,32 @@ function User({
         type="checkbox"
       ></input>
       <div>
-        <div className="margin-bottom">{name}</div>
+        <div data-testid="name" className="margin-bottom">
+          {name}
+        </div>
         <input
           ref={inputNameRef}
+          data-testid="nameInput"
           className={user.showEdit == false ? "hide" : ""}
+          placeholder={user.name}
           type="text"
         />
       </div>
       <div>
-        <div className="margin-bottom">{email}</div>
+        <div data-testid="email" className="margin-bottom">
+          {email}
+        </div>
         <input
           ref={inputEmailRef}
           className={user.showEdit == false ? "hide" : ""}
           type="email"
+          placeholder={user.email}
         />
       </div>
       <div>
-        <div className="margin-bottom">{role}</div>
+        <div data-testid="role" className="margin-bottom">
+          {role}
+        </div>
         <select
           ref={inputRoleRef}
           className={user.showEdit == false ? "hide" : ""}
@@ -110,6 +117,7 @@ function User({
       </div>
       <div>
         <EditIcon
+          data-testid="editIcon"
           className="margin"
           fontSize="large"
           onClick={() => handleEdit(id)}

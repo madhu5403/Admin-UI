@@ -10,7 +10,7 @@ function Search({
     var key = e.keyCode || e.charCode
     if (key == 8) {
       console.log("serachUsers", serachUsers)
-      const updatedUsers = serachUsers.filter((user) => {
+      const updatedUsers = serachUsers?.filter((user) => {
         const UserSting = user.name + " " + user.email + " " + user.role
         console.log(
           "e.target.value",
@@ -25,7 +25,7 @@ function Search({
     }
   }
   function handleSearch(e) {
-    if (serachUsers.length == 0) {
+    if (serachUsers?.length == 0) {
       setSearchUsers([...Users])
     }
     const updatedUsers = Users.filter((user) => {
